@@ -26,6 +26,7 @@ RUN apk add --update wget ca-certificates bash && \
 COPY yopa /opt/yopa
 RUN /opt/yopa/configure.sh
 ADD https://github.com/unbounce/yopa/releases/download/1.0.0-SNAPSHOT/yopa-1.0.0-SNAPSHOT-standalone.jar /opt/yopa/yopa-1.0.0-SNAPSHOT-standalone.jar
+RUN chmod 644 /opt/yopa/yopa-1.0.0-SNAPSHOT-standalone.jar
 
 # install mysql
 RUN apk add --update mysql mysql-client && \
