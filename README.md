@@ -10,6 +10,7 @@ This image has the following packaged together:
 - java8
 - leiningen 2.7.1
 - postgresql 9.6
+- mysql (MariaDB)
 - [yopa (Your Own Personal AWS)](https://github.com/unbounce/yopa "Your Own Personal AWS")
 
 To use the container & services locally:

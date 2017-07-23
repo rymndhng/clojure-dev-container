@@ -4,7 +4,7 @@ RUN apk update
 RUN apk add git openrc jq py-pip postgresql curl
 RUN pip install awscli
 
-# get postgres ready
+# Install postgres
 RUN apk add postgresql && \
     rc-update add postgresql && \
     rc-status && \
@@ -12,7 +12,7 @@ RUN apk add postgresql && \
     /etc/init.d/postgresql start && \
     /etc/init.d/postgresql stop
 
-# taken from juxt/docker
+# install leiningen, taken from juxt/docker
 ENV LEIN_ROOT 1
 RUN apk add --update wget ca-certificates bash && \
     wget -q "https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein" \
@@ -22,6 +22,16 @@ RUN apk add --update wget ca-certificates bash && \
     apk del wget ca-certificates && \
     rm -rf /tmp/* /var/cache/apk/*
 
-# install yopa
+# install Yopa
 COPY yopa /opt/yopa
 RUN /opt/yopa/configure.sh
+
+# install mysql
+RUN apk add --update mysql mysql-client && \
+    rc-update add mariadb && \
+    rc-status && \
+    touch /run/openrc/softlevel && \
+    /etc/init.d/mariadb setup && \
+    /etc/init.d/mariadb start && \
+    /usr/bin/mysqladmin -u root password 'root' && \
+    /etc/init.d/mariadb stop
